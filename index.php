@@ -80,7 +80,7 @@ class lumise_addon_aws extends lumise_addons
 				'name' => 'folder',
 				'desc' => 'Enter Folder',
 				'label' => 'Folder',
-				'default' => ''
+				'default' => 'ap-southeast-2'
 			),
 		);
 	}
