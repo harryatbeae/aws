@@ -73,14 +73,14 @@ class lumise_addon_aws extends lumise_addons
 				'name' => 'region',
 				'desc' => 'Enter Region',
 				'label' => 'Region',
-				'default' => ''
+				'default' => 'ap-southeast-2'
 			),
 			array(
 				'type' => 'input',
 				'name' => 'folder',
 				'desc' => 'Enter Folder',
 				'label' => 'Folder',
-				'default' => 'ap-southeast-2'
+				'default' => ''
 			),
 		);
 	}
