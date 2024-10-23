@@ -196,7 +196,7 @@ class lumise_addon_aws extends lumise_addons {
 		
 			$order_id = (Int)$order_id;  // Cast the order ID to an integer.
 			// Retrieve all items associated with the order.
-			$items = $lumise->db->rawQuery("SELECT `product_id`, `product_base`, `qty`, `print_files` FROM `{$lumise->db->prefix}order_products` WHERE `order_id`={$order_id}");
+			$items = $lumise->db->rawQuery("SELECT `product_id`, `product_base`, `qty`, `print_files`, `screenshots` FROM `{$lumise->db->prefix}order_products` WHERE `order_id`={$order_id}");
 			
 			// If no items are found, exit the function.
 			if (count($items) === 0)
@@ -221,8 +221,21 @@ class lumise_addon_aws extends lumise_addons {
 							foreach ($files as $file) {
 
 								$file_path = WP_CONTENT_DIR . '/uploads/lumise_data/orders/' . date('Y/m', time()) . '/' . basename($file);
-								$unique_key = $item_path . '/' . basename($file);
+								$unique_key = $item_path . '/stages/' . basename($file);
 								
+								// Upload the file to the S3 bucket
+								$this->upload_to_s3($bucket, $unique_key, $file_path);
+							}
+						}
+					}
+					if (!empty($item['screenshots'])) {
+						$files = @json_decode($item['screenshots']);
+
+						if (count($files) > 0) {
+							foreach ($files as $file) {
+
+								$file_path = WP_CONTENT_DIR . '/uploads/lumise_data/orders/' . date('Y/m', time()) . '/' . basename($file);
+								$unique_key = $item_path . '/screenshots/' . basename($file);
 								// Upload the file to the S3 bucket
 								$this->upload_to_s3($bucket, $unique_key, $file_path);
 							}
@@ -244,13 +257,15 @@ class lumise_addon_aws extends lumise_addons {
 			]);
 			
 			echo "File successfully uploaded to {$bucket}/{$key}";
-
 			
+
 			
 		} catch (AwsException $e) {
 			// Output error message if upload fails
 			echo "Error uploading to S3: " . $e->getMessage();
 		}
+
+
 	}
 }
 
