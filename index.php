@@ -158,7 +158,7 @@ class lumise_addon_aws extends lumise_addons
 		// AWS S3 Client setup
 		$s3 = new S3Client([
 			'version' => 'latest',
-			'region' => $lumise->get_option('region'),
+			'region' => (isset($lumise->get_option('region')) && $lumise->get_option('region') != '') ? $lumise->get_option('region') : 'ap-southeast-2',
 			'credentials' => [
 				'key' => $lumise->get_option('access_key_id'),
 				'secret' => $lumise->get_option('access_secret_key_id'),
@@ -199,7 +199,7 @@ class lumise_addon_aws extends lumise_addons
 		// Instantiate S3 client with AWS credentials
 		$this->s3Client = new S3Client([
 			'version' => 'latest',
-			'region' => $aws_region,
+			'region' => isset($aws_region) ? $aws_region : 'ap-southeast-2',
 			'credentials' => [
 				'key'    => $aws_access_key,
 				'secret' => $aws_secret_key,
