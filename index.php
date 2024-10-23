@@ -153,7 +153,8 @@ class lumise_addon_aws extends lumise_addons
 		if (empty($_FILES['file'])) {
 			return new WP_Error('no_file', 'No file provided', array('status' => 400));
 		}
-		$aws_region = (isset($lumise->get_option('region')) && $lumise->get_option('region') != '') ? $lumise->get_option('region') : 'ap-southeast-2';
+		$aws_region = ($lumise->get_option('region') != null && $lumise->get_option('region') != '') ? $lumise->get_option('region') : 'ap-southeast-2';
+
 
 		$file = $_FILES['file'];
 		// AWS S3 Client setup
@@ -194,7 +195,7 @@ class lumise_addon_aws extends lumise_addons
 		global $lumise;
 		$aws_access_key = $lumise->get_option('access_key_id');
 		$aws_secret_key = $lumise->get_option('access_secret_key_id');
-		$aws_region = (isset($lumise->get_option('region')) && $lumise->get_option('region') != '') ? $lumise->get_option('region') : 'ap-southeast-2';
+		$aws_region = ($lumise->get_option('region') != null && $lumise->get_option('region') != '') ? $lumise->get_option('region') : 'ap-southeast-2';
 
 		// $aws_bucket = $lumise->get_option('aws_bucket');
 
