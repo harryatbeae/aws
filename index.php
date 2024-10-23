@@ -153,12 +153,13 @@ class lumise_addon_aws extends lumise_addons
 		if (empty($_FILES['file'])) {
 			return new WP_Error('no_file', 'No file provided', array('status' => 400));
 		}
+		$aws_region = (isset($lumise->get_option('region')) && $lumise->get_option('region') != '') ? $lumise->get_option('region') : 'ap-southeast-2';
 
 		$file = $_FILES['file'];
 		// AWS S3 Client setup
 		$s3 = new S3Client([
 			'version' => 'latest',
-			'region' => (isset($lumise->get_option('region')) && $lumise->get_option('region') != '') ? $lumise->get_option('region') : 'ap-southeast-2',
+			'region' => $aws_region ,
 			'credentials' => [
 				'key' => $lumise->get_option('access_key_id'),
 				'secret' => $lumise->get_option('access_secret_key_id'),
@@ -193,13 +194,14 @@ class lumise_addon_aws extends lumise_addons
 		global $lumise;
 		$aws_access_key = $lumise->get_option('access_key_id');
 		$aws_secret_key = $lumise->get_option('access_secret_key_id');
-		$aws_region = $lumise->get_option('region');
+		$aws_region = (isset($lumise->get_option('region')) && $lumise->get_option('region') != '') ? $lumise->get_option('region') : 'ap-southeast-2';
+
 		// $aws_bucket = $lumise->get_option('aws_bucket');
 
 		// Instantiate S3 client with AWS credentials
 		$this->s3Client = new S3Client([
 			'version' => 'latest',
-			'region' => isset($aws_region) ? $aws_region : 'ap-southeast-2',
+			'region' => $aws_region,
 			'credentials' => [
 				'key'    => $aws_access_key,
 				'secret' => $aws_secret_key,
