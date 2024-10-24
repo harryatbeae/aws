@@ -281,10 +281,10 @@ class lumise_addon_aws extends lumise_addons
 				'ACL'    => 'public-read', // Optional: Make the file publicly accessible
 			]);
 
-			echo "File successfully uploaded to {$bucket}/{$key}";
+			// echo "File successfully uploaded to {$bucket}/{$key}";
 		} catch (AwsException $e) {
 			// Output error message if upload fails
-			echo "Error uploading to S3: " . $e->getMessage();
+			// echo "Error uploading to S3: " . $e->getMessage();
 		}
 	}
 }
